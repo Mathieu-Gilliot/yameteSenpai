@@ -1,4 +1,4 @@
-import {UserController} from "../controllers/userController";
+import {UserController} from "../../controllers/userController";
 
 
 export class Routes {
@@ -6,7 +6,7 @@ export class Routes {
     public userRoutes(app :any): void{
         app.route("/").get()
         .post(this.userController.login);
-        app.route('/create').post(this.userController.createUser)
+        app.route('/create').post(this.userController.checkuser,this.userController.createUser)
     }
 };
 

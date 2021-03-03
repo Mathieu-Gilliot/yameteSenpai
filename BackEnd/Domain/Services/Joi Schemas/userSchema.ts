@@ -1,15 +1,14 @@
 import * as joi from 'joi';
-import joiObjectId from 'joi-objectid';
 const joiExtended = joi.extend(require('joi-phone-number'));
 
 
+
 export class UserSchema {
-  public testObjectid : joi.ObjectSchema = joi.object({
-    test : joiObjectId()
-  })
+ 
   public userLogin : joi.ObjectSchema  = joi.object({
         email: joi.string().trim().email().required(),
-        password : joi.string().min(8).pattern( /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/)
+        password : joi.string().min(8).pattern( /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/),
+        test : joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
   });
 
   public userCreate : joi.ObjectSchema = joi.object({
@@ -17,9 +16,10 @@ export class UserSchema {
       firstName: joi.string().required(),
       email: joi.string().trim().email().required(),
       password : joi.string().min(8).pattern( /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/),
-      rdv : joi.array().items(joiObjectId()),
-      comments:joi.array().items(joiObjectId()),
+      rdv : joi.array().items(joi.string().regex(/^[0-9a-fA-F]{24}$/)),
+      comments:joi.array().items(joi.string().regex(/^[0-9a-fA-F]{24}$/)),
       phoneNumber: joiExtended.string().phoneNumber({defaultCountry:'FR',format: 'international'})
+  
   })
 
 }
