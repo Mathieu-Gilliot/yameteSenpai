@@ -2,8 +2,8 @@ import { RightsController } from './../Controllers/rightsController';
 
 
 
-export class UserRoutes {
-    private baseUrl = "/user"
+export class RightsRoutes {
+    private baseUrl = "/rights"
     public rightsController: RightsController = new RightsController();
     public rightsRoutes(app :any): void{
 

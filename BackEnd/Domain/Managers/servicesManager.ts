@@ -6,13 +6,9 @@ import { CreationOkResponse } from './../Services/OkResponse/creationResponse';
 import { SimpleOkResponse } from './../Services/OkResponse/simpleOkResponse';
 import { InternalError } from './../Services/Errors/internalError';
 import { BadRequestError } from './../Services/Errors/badRequestError';
-import { userParameterDTO } from './../DTO/userParameterDTO';
-import { UserSchema } from '../Services/Joi Schemas/userSchema';
 import { Services } from '../Services/handlers';
 import { Response, NextFunction } from "express";
-import * as mongodb from 'mongodb';
 import * as jwt from 'jsonwebtoken';
-import { IUserDTO } from '../../Interfaces/IUser';
 import { IJwtObject } from '../../Interfaces/IjwtObject';
 import { userRepository } from '../Data/Repositories/userRepository';
 
