@@ -1,8 +1,9 @@
-import { DbConnection } from '../../Domain/Data/dbConnection';
+import { userResponseDTO } from './../../DTO/userResponseDTO';
+import { DbConnection } from '../dbConnection';
 import * as mongodb from 'mongodb';
-import { IUserModel } from '../../Interfaces/IUser';
-import { userParameterDTO } from '../DTO/userParameterDTO';
-import { Collection } from 'typescript';
+import { IUserDTO } from '../../../Interfaces/IUser';
+import { userParameterDTO } from '../../DTO/userParameterDTO';
+
 
 export class userRepository {
 
@@ -10,36 +11,37 @@ export class userRepository {
     private connection = this.instance.connectMongo();
 
 
-    public async getUsers(): Promise<mongodb.Cursor<IUserModel> | Error> {
+    public async getUsers(): Promise<mongodb.Cursor<IUserDTO> | Error> {
         try {
             const client: mongodb.MongoClient = await this.connection;
-            const userCollection: mongodb.Collection<IUserModel> = client.db(process.env.DB_NAME).collection('Users');
-            const users: mongodb.Cursor<IUserModel> = userCollection.find();
+            const userCollection: mongodb.Collection<IUserDTO> = client.db(process.env.DB_NAME).collection('Users');
+            const users: mongodb.Cursor<IUserDTO> = userCollection.find();
             return users;
         } catch (err) {
-            return new Error('Une erreur est survenue lors de la requête')
+            return new Error('[getUsers] Une erreur est survenue lors de la requête')
         }
     }
 
-    public async createUser(userToCreate: userParameterDTO): Promise<boolean> {
+    public async createUser(userToCreate: userResponseDTO): Promise<boolean | string> {
         try {
             const client: mongodb.MongoClient = await this.connection;
-            const userCollection: mongodb.Collection<IUserModel> = client.db(process.env.DB_NAME).collection('Users');
-            userCollection.insertOne(userToCreate);
-            return true;
+            const userCollection: mongodb.Collection<IUserDTO> = client.db(process.env.DB_NAME).collection('Users');
+            const user = await userCollection.insertOne(userToCreate);
+            return user.insertedId;
         } catch (err) {
             return false;
         };
     }
 
-    public async getUserByID(id: any): Promise<IUserModel | Error> {
+    public async getUserByID(id: any): Promise<IUserDTO | Error> {
         try {
             const client: mongodb.MongoClient = await this.connection;
-            const userCollection: mongodb.Collection<IUserModel> = client.db(process.env.DB_NAME).collection('Users');
-            const result: IUserModel = await userCollection.findOne({ _id: new mongodb.ObjectID(id.toString()) });
+            const userCollection: mongodb.Collection<IUserDTO> = client.db(process.env.DB_NAME).collection('Users');
+            const result: IUserDTO = await userCollection.findOne({ _id: new mongodb.ObjectID(id.toString()) });
             return result;
         } catch (err) {
-            return new Error('Une erreur est survenue lors de la requête')
+            console.log(err)
+            return new Error('[getUserByID] Une erreur est survenue lors de la requête')
         }
 
     }
@@ -47,7 +49,7 @@ export class userRepository {
     public async removeUser(id: any): Promise<Boolean> {
         try {
             const client: mongodb.MongoClient = await this.connection;
-            const userCollection: mongodb.Collection<IUserModel> = client.db(process.env.DB_NAME).collection('Users');
+            const userCollection: mongodb.Collection<IUserDTO> = client.db(process.env.DB_NAME).collection('Users');
             userCollection.findOneAndDelete({ _id: new mongodb.ObjectID(id.toString()) });
             return true;
         } catch (err) {
@@ -58,7 +60,7 @@ export class userRepository {
     public async removeUsers(ids: Array<any>): Promise<Boolean> {
         try {
             const client: mongodb.MongoClient = await this.connection;
-            const userCollection: mongodb.Collection<IUserModel> = client.db(process.env.DB_NAME).collection('Users');
+            const userCollection: mongodb.Collection<IUserDTO> = client.db(process.env.DB_NAME).collection('Users');
             const objectIds: Array<mongodb.ObjectID> = ids.map(id => new mongodb.ObjectID(id));
             userCollection.deleteMany({ _id: { $in: objectIds } });
             return true;
@@ -69,7 +71,7 @@ export class userRepository {
 
     public async updateUser(id: any, fieldToUpdate, newValue) : Promise<Boolean> {
         const client: mongodb.MongoClient = await this.connection;
-        const userCollection: mongodb.Collection<IUserModel> = client.db(process.env.DB_NAME).collection('Users');
+        const userCollection: mongodb.Collection<IUserDTO> = client.db(process.env.DB_NAME).collection('Users');
         const mongoId = new mongodb.ObjectID(id.toString());
         let updated: boolean;
         switch (fieldToUpdate) {
@@ -84,22 +86,6 @@ export class userRepository {
             case 'firstName':
                 try {
                     userCollection.updateOne({ _id: mongoId }, { $set: { firstName: newValue } });
-                    updated = true;
-                }catch(err){
-                    updated = false;
-                }
-                break;
-            case 'email':
-                try {
-                    userCollection.updateOne({ _id: mongoId }, { $set: { email : newValue } });
-                    updated = true;
-                }catch(err){
-                    updated = false;
-                }
-                break;
-            case 'passWord':
-                try {
-                    userCollection.updateOne({ _id: mongoId }, { $set: { password: newValue } });
                     updated = true;
                 }catch(err){
                     updated = false;

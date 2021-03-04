@@ -1,7 +1,10 @@
+import { IAuth } from './../../Interfaces/IAuth';
 import { rejects } from 'assert'
 import * as bcrypt from 'bcrypt'
 import { Cursor } from 'mongodb'
 import { resolve } from 'path'
+import { IUserDTO } from '../../Interfaces/IUser'
+import * as mongodb from 'mongodb';
 
 export class Services {
 
@@ -14,7 +17,7 @@ export class Services {
         }
     }
 
-    public checkEmptyUndfinedNull(data: any): boolean {
+    public checkEmptyUndfinedNull(data: string): boolean {
         if (data.trim().length != 0 && data != undefined && data != null) {
             return true;
         } else {
@@ -49,12 +52,14 @@ export class Services {
 
     }
 
-    public async searchCryptedMail(querry: Cursor, data) {
-        const foundUsers = await querry.toArray();
-        for (const user of foundUsers) {
-            const crypt = await this.compareCrypt(data, user.email);
+    public async searchCryptedMail(querry: Cursor<IAuth>, data) : Promise< IAuth | Error> {
+        const foundAuths = await querry.toArray();
+        for (const auth of foundAuths) {
+            const crypt = await this.compareCrypt(data, auth.email);
             if (crypt == true) {
-                return user
+                return auth
+            }else{
+                return new Error('Comparaison échouée')
             }
 
         }

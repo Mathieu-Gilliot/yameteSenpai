@@ -1,9 +1,10 @@
+import { IUserDTO } from './IUser';
 
 import { Request } from 'express';
-import { userParameterDTO } from '../Domain/DTO/userParameterDTO';
+import { userResponseDTO } from '../Domain/DTO/userResponseDTO';
 
 
 
 export interface extendedRequest extends Request{
-    user:  userParameterDTO
+    user:  IUserDTO
 }
