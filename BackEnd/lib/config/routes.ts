@@ -7,6 +7,7 @@ export class Routes {
         app.route("/").get()
         .post(this.userController.login);
         app.route('/create').post(this.userController.checkuser,this.userController.createUser)
+        app.route('/test').post(this.userController.test)
     }
 };
 
