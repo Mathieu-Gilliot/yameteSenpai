@@ -1,6 +1,5 @@
 import { IAuth } from './../../Interfaces/IAuth';
 import { AuthRepository } from './../Data/Repositories/authRepository';
-import { userResponseDTOHandler } from './../Services/DTOhandlers/userResponseDTOhandler';
 import { extendedRequest } from './../../Interfaces/extendedRequest';
 import { AuthError } from './../Services/Errors/authError';
 import { CreationOkResponse } from './../Services/OkResponse/creationResponse';
