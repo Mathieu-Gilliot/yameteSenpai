@@ -3,14 +3,14 @@ import { Request, Response,NextFunction } from "express";
 import {UserManager} from '../Domain/Managers/userManager'
 
 export class UserController {
-    userManager = new UserManager()
+    private userManager = new UserManager()
 
 
     public createUser=(req:extendedRequest, res:Response)=>{
 
         this.userManager.createUser(req,res);
     }
-    
+
     public test = (req:extendedRequest,res:Response)=>{
 
         this.userManager.updateUser(req,res)

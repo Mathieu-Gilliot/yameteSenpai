@@ -31,9 +31,6 @@ export class UserManager {
     private authRepository = new AuthRepository();
 
     constructor() { }
-    public async test(req: extendedRequest, res: Response) {
-        this.userRepository.updateUser(req.body.id, req.body.field, req.body.newValue);
-    }
 
     public async createUser(req: extendedRequest, res: Response) {
         if (req.user != null) {
@@ -62,7 +59,6 @@ export class UserManager {
             } else {
                 this.internalError.sendResponse(res, "Une erreur est survenue");
             }
-
         } else {
             this.badRequestError.sendResponse(res, "Les données fournies sont incorrectes");
         }
@@ -72,27 +68,6 @@ export class UserManager {
 
     }
 
-    public async checkToken(req: extendedRequest, res: Response, next: NextFunction) {
-        const headerAuth = await req.header('Authorization');
-        const token = await headerAuth && headerAuth.split(' ')[1];
-        if (this.services.checkEmptyUndfinedNull(token)) {
-            this.authError.sendResponse(res, 'Une authentification est nécessaire');
-        } else {
-            jwt.verify(token, process.env.SECRET_TOKEN, async (err, userId: IJwtObject) => {
-                if (err) {
-                    this.internalError.sendResponse(res, 'Une erreur est survenue');
-                } else {
-                    const foundUser: IUserDTO | Error = await this.userRepository.getUserByID(userId.id)
-                    if (foundUser == null || foundUser instanceof Error) {
-                        this.authError.sendResponse(res, foundUser.toString());
-                    } else {
-                        req.user = foundUser;
-                        next();
-                    }
-                }
-            })
-        }
-    }
     public async removeUser(req: extendedRequest, res: Response) {
         if (req.user != null) {
             const { error, value } = this.userSchema.removeUserSchema.validate(req.body);
@@ -115,9 +90,9 @@ export class UserManager {
         if (req.user != null) {
             const { error, value } = this.userSchema.removeUsersSchema.validate(req.body);
             if (!error) {
-                const userRemove = this.userRepository.removeUsers(req.body.Ids);
-                const authRemove = this.authRepository.removeMultipleAuth(req.body.Ids)
-                if (userRemove && authRemove) {
+                const usersRemove = this.userRepository.removeUsers(req.body.Ids);
+                const authsRemove = this.authRepository.removeMultipleAuth(req.body.Ids)
+                if (usersRemove && authsRemove) {
                     this.simpleOkResponse.sendResponse(res, "Utilisateurs supprimés");
                 } else {
                     this.internalError.sendResponse(res, "Une erreur est survenue lors de la suppression des utilisateurs");
@@ -140,10 +115,9 @@ export class UserManager {
 
                 case this.services.checkEmptyUndfinedNull(req.body.newPhoneNumber):
                     this.userRepository.updateUser(req.params.id, "phoneNumber", req.body.newPhoneNumber);
-
                     break;
-                default: this.badRequestError.sendResponse(res, "Aucune mise à jour effectuée");
 
+                default: this.badRequestError.sendResponse(res, "Aucune mise à jour effectuée");
             }
             this.simpleOkResponse.sendResponse(res, "Mise à jour réussie");
         } else {

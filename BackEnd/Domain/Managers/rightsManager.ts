@@ -18,4 +18,9 @@ export class RightsManager {
     private simpleOkResponse = new SimpleOkResponse();
     private creationOkResponse = new CreationOkResponse();
     private services = new Services();
+
+
+    
+
+
 }

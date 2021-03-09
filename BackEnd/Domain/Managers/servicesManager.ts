@@ -42,7 +42,6 @@ export class ServicesManager {
                             req.user = user
                             next();
                         }
-
                     }
                 }
             })

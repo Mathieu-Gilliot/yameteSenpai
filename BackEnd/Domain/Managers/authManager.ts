@@ -49,6 +49,7 @@ export class AuthManager {
             this.badRequestError.sendResponse(res, "Les données fournies ne sont pas correctes");
         }
     }
+    
     public async updateAuth(req: extendedRequest, res: Response) {
         if (req.user != null) {
             const auth = await this.authRepository.getAuth(req.user._id);

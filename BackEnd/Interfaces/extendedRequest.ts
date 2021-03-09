@@ -6,5 +6,5 @@ import { userResponseDTO } from '../Domain/DTO/userResponseDTO';
 
 
 export interface extendedRequest extends Request{
-    user:  IUserDTO
+    user:  IUserDTO;
 }
