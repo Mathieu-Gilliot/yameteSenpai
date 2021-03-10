@@ -1,0 +1,512 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@100;200;300;400;500&display=swap');
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Josefin Slab', serif;
+  font-size: 100%;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #31353d;
+}
+
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
+
+.box {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+}
+
+
+.frame {
+  border: 2px solid #CE5E79;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+}
+
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 1.2rem;
+  color: white;
+}
+
+form div {
+  margin: 1rem;
+}
+
+form label {
+  margin: 0.5rem;
+}
+
+input {
+  background: #FFFFFF;
+  border: 2px solid #CE5E79;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  height: 2.1rem;
+}
+
+
+button {
+  margin: auto 1rem;
+  color: white;
+  background: #31353d;
+  border: 2px solid #CE5E79;
+  border-radius: 4px;
+  height: 2.2rem;
+  width: 9.5rem;
+  font-weight: 500;
+}
+
+.frame-connexion {
+  display: flex;
+  justify-content: center;
+  margin: 2.2rem auto;
+}
+
+.frame-connexion button {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.frame-inscription button {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* -------------------------------------------------------------------------------- */
+/* ----------------------------ACCUEIL------------------------------------------ */
+
+h1 {
+  color: #CE5E79;
+  font-size: 6vh;
+  margin: 6vh auto;
+}
+
+.paragraphe {
+  font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.paragraphe p {
+  margin: 0.3rem;
+  color: white;
+}
+
+.arbre {
+  height: 45vh;
+  position: fixed;
+  bottom: 0;
+}
+
+.bois{
+  height: 60vh;
+  position: fixed;
+  bottom: -1%;
+  left: -1%;
+}
+
+
+.drop:nth-child(1) {
+  position: absolute;
+  bottom: 100%;
+  height: 1rem;
+  pointer-events: none;
+  animation: drop 12s linear infinite;
+}
+
+.drop:nth-child(2) {
+  position: absolute;
+  bottom: 100%;
+  left: 30%;
+  height: 1rem;
+  pointer-events: none;
+  animation: drop 15s linear infinite;
+}
+
+.drop:nth-child(3) {
+  position: absolute;
+  bottom: 100%;
+  left: 70%;
+  height: 1rem;
+  pointer-events: none;
+  animation: drop 14s linear infinite;
+  animation-delay: 2s;
+}
+
+.drop:nth-child(4) {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  height: 1rem;
+  pointer-events: none;
+  animation: drop 25s linear infinite;
+}
+
+
+
+@keyframes drop {
+  0% {
+
+    transform: translateX(0px) translateY(-10vh) rotateZ(-30deg);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateX(-50px) translateY(50vh) rotateZ(-60deg);
+    opacity: 0.50;
+  }
+
+  75% {
+    transform: translateX(0px) translateY(90vh) rotateZ(-90deg);
+    opacity: 0.25;
+  }
+
+  100% {
+    transform: translateX(-50px) translateY(100vh) rotateZ(-120deg);
+    opacity: 0;
+  }
+}
+
+/* -------------------------------------------------------------------------------- */
+/* ------------------------Contact------------------------------------------------- */
+
+.box-contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* grid-template-rows: 1fr 1fr 1fr; */
+}
+
+.frame-contact {
+  height: 30vh;
+  width: 20vw;
+  color: white;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.frame-contact p {
+  font-family: "Redacted Script";
+  font-size: 1rem;
+  margin: 0.5rem 0.5rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 0.5rem auto;
+}
+
+
+.frame-contact:nth-child(5) {
+  grid-area: 3/3;
+  justify-self: flex-start;
+
+}
+
+.frame-contact:nth-child(4) {
+  grid-area: 3/2;
+  justify-self: center;
+}
+
+.frame-contact:nth-child(3) {
+  grid-area: 3/1;
+  justify-self: flex-end;
+}
+
+.titre {
+  grid-area: 1/2;
+}
+
+.sphere {
+  grid-area: 2/2;
+  justify-self: center;
+  align-self: flex-start;
+  height: 40vh;
+}
+
+/* -------------------------------------------------------------------------------- */
+/* ------------------------Formules----------------------------------------------- */
+
+.frame-formules {
+  width: 45rem;
+  display: flex;
+  align-items: center;
+  margin: 1rem auto;
+  color: white;
+}
+
+.placeholder {
+  font-family: "Redacted Script";
+}
+
+.circle {
+  border: 2px solid transparent;
+  /* border-radius: 50%;
+  height: 8rem;
+  width:8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+  margin: auto 2rem;
+}
+
+.img-circle {
+  clip-path: circle(39.5%);
+  height: 10rem;
+}
+
+/* -------------------------------------------------------------------------------- */
+/* ------------------------Etabli-------------------------------------------------- */
+
+.box-etabli {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.paragraphe-etabli p {
+  margin: 1rem auto;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+
+
+.yoga {
+  height: 20vh;
+  position: absolute;
+  bottom: 10px;
+}
+
+/* -------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------- */
+
+.calendar {
+  margin: 1rem auto;
+}
+
+.justepourlemargindefinquimetabasselesboules {
+  margin-bottom: 2rem;
+}
+
+
+.input-commandes input {
+  position: absolute;
+  left: -9999px;
+}
+
+.input-commandes label {
+  display: block;
+  position: relative;
+  margin: 20px;
+  padding: 15px 30px 15px 62px;
+  border: 3px solid #CE5E79;
+  border-radius: 20px;
+  color: #fff;
+  background-color: #31353d;
+  box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color .2s, box-shadow .2s;
+}
+
+.input-commandes label::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 10px;
+  width: 32px;
+  border: 3px solid #CE5E79;
+  border-radius: 20px;
+  transition: background-color .2s;
+}
+
+input:checked+label {
+  background-color: #CE5E79;
+}
+
+input:checked+label::before {
+  background-color: #fff;
+}
+
+
+
+/* -------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------- */
+
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 36px;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #CE5E79;
+}
+
+/* Color/shape of burger icon bars on hover*/
+.bm-burger-bars-hover {
+  background: white;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: #656a6e;
+}
+
+/*
+Sidebar wrapper styles
+Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases PASTOUCHEROHOOH
+*/
+.bm-menu-wrap {
+  position: fixed;
+  height: 100%;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: #CE5E79;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.3rem;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: #b8b7ad;
+  padding: 0.8em;
+}
+
+/* Individual item */
+.bm-item {
+  display: inline-block;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: black;
+}
+
+.menu-item:focus {
+  outline: none;
+}
+
+.menu-item:link {
+  color: rgb(255, 255, 255);
+}
+
+.menu-item:visited {
+  color: rgb(255, 255, 255);
+}
+
+.menu-item {
+  margin: 1rem;
+  text-decoration: none;
+}
+
+
+/* -------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------- */
+
+
+@media screen and (max-width: 800px) {
+
+  html {
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 5vh;
+    margin: 6vh auto;
+  }
+
+  .box-landing {
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+
+  .frame {
+    width: 100vw;
+    background: transparent;
+    border: transparent;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0);
+  }
+
+
+  .paragraphe {
+    font-size: 1.2rem;
+  }
+
+  form {
+    font-size: 1rem;
+  }
+
+  button {
+    margin: auto 0.3rem;
+    color: white;
+    background: #31353d;
+    border: 2px solid #CE5E79;
+    border-radius: 4px;
+    height: 2.2rem;
+    width: 9.5rem;
+    font-weight: 500;
+  }
+
+  .box-contact {
+    display: flex;
+    align-items: center;
+  }
+
+  .sphere {
+    align-self: center;
+  }
+
+  .paragraphe-etabli p {
+    margin: 1rem auto;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+
+  .bois{
+    height: 0vh;
+  }
+
+}
