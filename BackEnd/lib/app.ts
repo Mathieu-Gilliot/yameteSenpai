@@ -3,7 +3,7 @@ import { TreatmentRoutes } from './../Routes/treatmentsRoutes';
 import { AuthRoutes } from './../Routes/authRoutes';
 import * as express from "express";
 import {UserRoutes} from "../Routes/userRoutes";
-
+import * as cors from 'cors';
 
 
 class App {
@@ -24,7 +24,10 @@ class App {
         this.app.use(express.json());
         this.app.use(express.urlencoded({
             extended: true}));
-
+        this.app.use(cors({
+            origin:['http://127.0.0.1:5500',"http://api.app.localhost:5500",'http://localhost:5500', 'http://localhost:3000', 'http://api.app.localhost:3000'],
+            credentials:true,
+        }))
     }
 }
  export default new App().app;
