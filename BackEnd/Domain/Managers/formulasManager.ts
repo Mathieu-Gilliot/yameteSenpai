@@ -108,17 +108,17 @@ export class FormulasManager {
             if (formula instanceof Error) {
                 this.internalError.sendResponse(res, 'Une erreur est survenue lors de la recherche de la formule')
             } else if (formula != null && formula != undefined) {
-                const treatments : Array<string> = new Array();
-                for(let treatmentId of formula.services){
-                    try{
-                      const treatment = await this.treatmentRepository.getTreatment(treatmentId);
-                      if(treatment instanceof Error){
-                        throw treatment;
+                const treatments: Array<string> = new Array();
+                for (let treatmentId of formula.services) {
+                    try {
+                        const treatment = await this.treatmentRepository.getTreatment(treatmentId);
+                        if (treatment instanceof Error) {
+                            throw treatment;
 
-                      }else{
-                         treatments.push(treatment.name);
-                      }
-                    }catch(err){
+                        } else {
+                            treatments.push(treatment.name);
+                        }
+                    } catch (err) {
                         console.log(err);
                     }
                 }
@@ -132,39 +132,53 @@ export class FormulasManager {
         }
     }
 
+    //Work in progress
     public async updateFormula(req: extendedRequest, res: Response) {
-        console.log(req.body)
         if (req.user != null) {
+            let updated: boolean;
             try {
                 switch (true) {
                     case this.services.checkEmptyUndfinedNull(req.body.newTitle):
                         const updateTitle = await this.formulaRepository.updateFormula(req.params.id, "title", req.body.newTitle);
-                        if(!updateTitle){
+                        if (!updateTitle) {
                             throw new Error("Mise à jour échouée");
+                        } else {
+                            updated = true;
                         }
                     case (req.body.newServices != null && req.body.newServices != undefined):
                         const updateServices = await this.formulaRepository.updateFormula(req.params.id, "services", req.body.newServices);
-                        if(!updateServices){
+                        if (!updateServices) {
                             throw new Error("Mise à jour échouée");
+                        } else {
+                            updated = true;
                         }
                     case this.services.checkEmptyUndfinedNull(req.body.newDuration):
                         const updateDuration = await this.formulaRepository.updateFormula(req.params.id, "duration", req.body.newDuration);
-                        if(!updateDuration){
+                        if (!updateDuration) {
                             throw new Error("Mise à jour échouée");
+                        } else {
+                            updated = true;
                         }
                     case this.services.checkEmptyUndfinedNull(req.body.newPrice):
                         const updatePrice = await this.formulaRepository.updateFormula(req.params.id, "price", req.body.newPrice);
-                        if(!updatePrice){
+                        if (!updatePrice) {
                             throw new Error("Mise à jour échouée");
+                        } else {
+                            updated = true;
                         }
                         break;
 
-                    default: throw new Error("Aucune mise à jour à éffectuer");
+                    default: updated = false;
 
                 }
-                this.simpleOkResponse.sendResponse(res, "Mise à jour réussie");
+                if (updated) {
+                    this.simpleOkResponse.sendResponse(res, "Mise à jour réussie");
+                } else {
+                    throw new Error("Aucune mise à jour à effectuer");
+                }
+
             } catch (err) {
-                this.badRequestError.sendResponse(res,err.message);
+                this.badRequestError.sendResponse(res, err.message);
             }
 
         } else {

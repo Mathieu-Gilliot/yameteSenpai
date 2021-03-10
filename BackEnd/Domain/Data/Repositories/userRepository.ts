@@ -55,7 +55,6 @@ export class userRepository {
                 return result;
             }
         } catch (err) {
-            console.log(err)
             return new Error('[getUserByID] Une erreur est survenue lors de la requête')
         }
 

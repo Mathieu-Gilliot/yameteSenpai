@@ -34,34 +34,34 @@ export class UserManager {
 
     public async createUser(req: extendedRequest, res: Response) {
         if (req.user != null) {
-        const { error, value } = this.userSchema.userCreate.validate(req.body);
-        if (!error) {
-            const auths: mongodb.Cursor<IAuth> | Error = await this.authRepository.getAllAuth()
-            if (auths instanceof mongodb.Cursor) {
-                const result = await this.services.searchCryptedMail(auths, req.body.email);
-                if (!result) {
-                    req.body.password = await this.services.crypt(req.body.password);
-                    req.body.email = await this.services.crypt(req.body.email);
-                    const userCreation = await this.userRepository.createUser(userResponseDTOHandler.toUserResponseDTO(req.body));
-                    if (userCreation) {
-                        const authCreation = await this.authRepository.createAuth({ email: req.body.email, password: req.body.password, userId: userCreation.toString() })
-                        if (authCreation) {
-                            this.creationOkResponse.sendResponse(res, 'Création réussie');
+            const { error, value } = this.userSchema.userCreate.validate(req.body);
+            if (!error) {
+                const auths: mongodb.Cursor<IAuth> | Error = await this.authRepository.getAllAuth()
+                if (auths instanceof mongodb.Cursor) {
+                    const result = await this.services.searchCryptedMail(auths, req.body.email);
+                    if (!result) {
+                        req.body.password = await this.services.crypt(req.body.password);
+                        req.body.email = await this.services.crypt(req.body.email);
+                        const userCreation = await this.userRepository.createUser(userResponseDTOHandler.toUserResponseDTO(req.body));
+                        if (userCreation) {
+                            const authCreation = await this.authRepository.createAuth({ email: req.body.email, password: req.body.password, userId: userCreation.toString() })
+                            if (authCreation) {
+                                this.creationOkResponse.sendResponse(res, 'Création réussie');
+                            } else {
+                                this.badRequestError.sendResponse(res, "Une erreur de sauvegarde est survenue");
+                            }
                         } else {
                             this.badRequestError.sendResponse(res, "Une erreur de sauvegarde est survenue");
                         }
                     } else {
-                        this.badRequestError.sendResponse(res, "Une erreur de sauvegarde est survenue");
+                        this.badRequestError.sendResponse(res, "Un utilisateur est déjà enregistré avec cet email");
                     }
                 } else {
-                    this.badRequestError.sendResponse(res, "Un utilisateur est déjà enregistré avec cet email");
+                    this.internalError.sendResponse(res, "Une erreur est survenue");
                 }
             } else {
-                this.internalError.sendResponse(res, "Une erreur est survenue");
+                this.badRequestError.sendResponse(res, "Les données fournies sont incorrectes");
             }
-        } else {
-            this.badRequestError.sendResponse(res, "Les données fournies sont incorrectes");
-        }
         } else {
             this.authError.sendResponse(res, 'Une authentification est nécessaire');
         }
@@ -105,21 +105,37 @@ export class UserManager {
         }
     }
     public async updateUser(req: extendedRequest, res: Response) {
+
         if (req.user != null) {
-            switch (true) {
-                case this.services.checkEmptyUndfinedNull(req.body.newName):
-                    this.userRepository.updateUser(req.params.id, "name", req.body.newName);
+            try {
+                switch (true) {
 
-                case this.services.checkEmptyUndfinedNull(req.body.newFirstName):
-                    this.userRepository.updateUser(req.params.id, "firstName", req.body.newFirstName);
+                    case req.body.newName != undefined:
+                        if (this.services.checkEmptyUndfinedNull(req.body.newName)) {
 
-                case this.services.checkEmptyUndfinedNull(req.body.newPhoneNumber):
-                    this.userRepository.updateUser(req.params.id, "phoneNumber", req.body.newPhoneNumber);
-                    break;
+                            this.userRepository.updateUser(req.params.id, "name", req.body.newName);
+                        }
 
-                default: this.badRequestError.sendResponse(res, "Aucune mise à jour effectuée");
+                    case req.body.newFirstName != undefined:
+                        if (this.services.checkEmptyUndfinedNull(req.body.newFirstName)) {
+
+                            this.userRepository.updateUser(req.params.id, "firstName", req.body.newFirstName);
+                        }
+                    case req.body.newPhoneNumber != undefined:
+                        if (this.services.checkEmptyUndfinedNull(req.body.newPhoneNumber)) {
+
+                            this.userRepository.updateUser(req.params.id, "phoneNumber", req.body.newPhoneNumber);
+                            break;
+                        }
+
+                    default: throw new Error(" Aucune mise à jour à effectuer");
+
+                }
+                this.simpleOkResponse.sendResponse(res, "Mise à jour réussie");
+            } catch (err) {
+                this.badRequestError.sendResponse(res, err.message)
             }
-            this.simpleOkResponse.sendResponse(res, "Mise à jour réussie");
+
         } else {
             this.authError.sendResponse(res, 'Une authentification est nécessaire');
         }

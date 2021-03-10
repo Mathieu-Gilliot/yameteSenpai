@@ -12,6 +12,5 @@ export class DomainService{
             const collection: mongodb.Collection = client.db(process.env.DB_NAME).collection(collectionName);
             return collection;
         }
-
     }
 }

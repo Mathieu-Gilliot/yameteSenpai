@@ -19,7 +19,8 @@ export class Services {
     }
 
     public checkEmptyUndfinedNull(data: string): boolean {
-        if (data != undefined && data != null && data.trim().length != 0) {
+
+        if (data != null && data.trim().length != 0) {
             return true;
         } else {
             return false;
