@@ -13,23 +13,27 @@ export class UserController {
 
     public test = (req:extendedRequest,res:Response)=>{
 
-        this.userManager.updateUser(req,res)
+        this.userManager.updateUser(req,res);
     }
     public updateUser = (req:extendedRequest,res:Response)=>{
 
-        this.userManager.updateUser(req,res)
+        this.userManager.updateUser(req,res);
     }
     public deleteUser = (req:extendedRequest,res:Response)=>{
 
-        this.userManager.removeUser(req,res)
+        this.userManager.removeUser(req,res);
     }
     public deleteMultipleUser = (req:extendedRequest,res:Response)=>{
 
-        this.userManager.removeUsers(req,res)
+        this.userManager.removeUsers(req,res);
     }
     public getUserById = (req:extendedRequest,res:Response)=>{
 
-        this.userManager.getUserByID(req,res)
+        this.userManager.getUserByID(req,res);
+    }
+    public getConnectedUser = (req:extendedRequest,res:Response)=>{
+        
+        this.userManager.getConnected(req,res);
     }
 };
 

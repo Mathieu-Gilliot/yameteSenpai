@@ -29,7 +29,7 @@ export class CRD {
                 return items;
             }
         } catch (err) {
-            return new Error('[getUsers] Une erreur est survenue lors de la requête')
+            return new Error('[getAllItem] Une erreur est survenue lors de la requête')
         }
     }
 
@@ -58,7 +58,7 @@ export class CRD {
             }
         } catch (err) {
             console.log(err)
-            return new Error('[getUserByID] Une erreur est survenue lors de la requête')
+            return new Error('[getItemByID] Une erreur est survenue lors de la requête')
         }
 
     }

@@ -10,10 +10,11 @@ export class UserRoutes {
     private servicesController: ServicesController = new ServicesController();
     public userRoutes(app: any): void {
 
-        app.route(this.baseUrl).post(this.servicesController.checkToken,this.userController.createUser)
+        app.route(this.baseUrl).get(this.servicesController.checkToken,this.userController.getConnectedUser)
+                               .post(this.servicesController.checkToken,this.userController.createUser)
                                .delete(this.servicesController.checkToken, this.userController.deleteMultipleUser);
 
-        app.route(this.baseUrl + '/:id').get(this.servicesController.checkToken,this.servicesController.checkToken, this.userController.getUserById)
+        app.route(this.baseUrl + '/:id').get(this.servicesController.checkToken, this.userController.getUserById)
                                         .patch(this.servicesController.checkToken,this.userController.updateUser)
                                         .delete(this.servicesController.checkToken,this.userController.deleteUser);
 

@@ -156,4 +156,19 @@ export class UserManager {
         }
     }
 
+    public async getConnected(req: extendedRequest, res: Response) {
+        if (req.user != null) {
+            const user: IUserDTO | Error = await this.userRepository.getUserByID(req.user._id)
+            if (user instanceof Error) {
+                this.badRequestError.sendResponse(res, "Une erreur est survenue lors de la recherche de l'utilisateur")
+            } else if (user != null && user != undefined) {
+                this.simpleOkResponse.sendResponse(res, await userResponseDTOHandler.toUserResponseDTO(user))
+            } else {
+                this.badRequestError.sendResponse(res, "Aucun utilisateur trouvé")
+            }
+        } else {
+            this.authError.sendResponse(res, 'Une authentification est necessaire')
+        }
+    }
+
 }

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../sidebar/sidebar';
 import login from '../../fetch/login';
 
-const Connexion = () => {      
+const Connexion = () => {
 
     useEffect(() => {
         login()
       });
-   
+
     return(
 
         <div>
@@ -15,10 +15,10 @@ const Connexion = () => {
 
             <div className="box">
                 <h1>Yamete Senpai</h1>
-         
+
                 <div className="frame frame-connexion">
 
-                        <form id='form_co' action="" method="post" name='form_co'>
+                        <form id='form_co'  name='form_co'>
                         <div>
                         <label>Mail :</label>
                         <input type="text" id="mail" name="user_mail"></input>
@@ -31,12 +31,12 @@ const Connexion = () => {
 
                         <div>
                         <button id="" type="">Annuler</button>
-                        <button id="btn_co" type="">Connexion</button>
+                        <button id="btn_co" >Connexion</button>
                         </div>
 
                         </form>
                 </div>
-                
+
                 <svg className="arbre" viewBox="0 0 601 564" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M551.417 392.384C551.417 368.504 529.467 349.144 502.417 349.144C475.367 349.144 453.417 368.504 453.417 392.384C426.357 392.384 404.417 411.754 404.417 435.634C404.417 459.514 426.367 478.884 453.417 478.884C461.93 478.914 470.33 476.926 477.927 473.084C485.531 476.896 493.921 478.881 502.427 478.881C510.933 478.881 519.323 476.896 526.927 473.084C534.524 476.926 542.923 478.914 551.437 478.884C578.507 478.884 600.437 459.514 600.437 435.634C600.437 411.754 578.527 392.384 551.417 392.384Z" fill="#CE5E79"/>
 <path opacity="0.1" d="M551.417 392.384C551.417 368.504 529.467 349.144 502.417 349.144C475.367 349.144 453.417 368.504 453.417 392.384C426.357 392.384 404.417 411.754 404.417 435.634C404.417 459.514 426.367 478.884 453.417 478.884C461.93 478.914 470.33 476.926 477.927 473.084C485.531 476.896 493.921 478.881 502.427 478.881C510.933 478.881 519.323 476.896 526.927 473.084C534.524 476.926 542.923 478.914 551.437 478.884C578.507 478.884 600.437 459.514 600.437 435.634C600.437 411.754 578.527 392.384 551.417 392.384Z" fill="black"/>
@@ -70,7 +70,7 @@ const Connexion = () => {
 <path opacity="0.1" d="M155.027 179.004C168.834 179.004 180.027 167.811 180.027 154.004C180.027 140.197 168.834 129.004 155.027 129.004C141.22 129.004 130.027 140.197 130.027 154.004C130.027 167.811 141.22 179.004 155.027 179.004Z" fill="#CE5E79"/>
 </svg>
 
-        <div className="rain"> 
+        <div className="rain">
             <svg className="drop" viewBox="0 0 8 23" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 11.5C0.138318 15.6091 1.43477 19.5956 3.73999 23C6.04521 19.5956 7.34166 15.6091 7.47998 11.5C7.47998 5.15 5.80999 0 3.73999 0C1.66999 0 0 5.15 0 11.5Z" fill="#CE5E79"/>
             </svg>
@@ -90,9 +90,9 @@ const Connexion = () => {
 
             </div>
         </div>
-    
+
     )
-    
+
 }
 
 export default Connexion
